@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Artist List</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Satendra">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <h1>Search for an Artist</h1>
+    <p>Type an artist name and click on "Search". Then, click on any "View Albums" link from the results will take you to an artist detail page.</p>
+    <form id="search-form">
+		<div class="col-md-4">
+			<div class="form-group">
+				<input type="text" id="query" value="" class="form-control" placeholder="Type an Artist Name"/>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<input type="submit" id="search" class="btn btn-lg btn-info" value="Search" />
+			</div>
+		</div>
+	</form>
+    <div id="results"></div>
+	<div id="pagination"></div>
+</div>
+<script>
+
+var searchArtist = function (artisturl) {
+    $.ajax({
+        url: artisturl,
+        success: function (response) {
+		$('#results, #pagination').empty();
+		$.each(response.artists.items, function(i, item) {
+		$('#results').append('<div class="col-md-12 col-xs-12 main-container artist'+i+'"></div>');
+		$(".artist"+i).append('<div class="col-md-4 col-xs-6 cover"></div><div class="col-md-4 col-xs-6"><div><h4>'+response.artists.items[i].name+'</h4></div><div><a href="artistdetails.html?'+response.artists.items[i].id+'">View Albums</a></div></div>');
+		if(response.artists.items[i].images[0]){$(".artist"+i).children('.cover').css("background-image", "url("+response.artists.items[i].images[0].url+")"); }
+        });
+		//pagination
+		var prev = "'"+response.artists.previous+"'";
+		var next = "'"+response.artists.next+"'";
+		var offset = response.artists.offset;
+		var limit = response.artists.limit;
+		var total = response.artists.total;
+		var offsetnext = offset+limit;
+		if(total<=offsetnext)
+			{offsetnext = total;}
+		else
+			{offsetnext = offsetnext;}
+		$('#pagination').append('<div class="col-md-12 col-xs-12 paginationmain"><ul class="pager"><li class="col-xs-12 hidden-md hidden-lg">Showing '+offset+'-'+offsetnext+' of '+response.artists.total+'</li><li id="prev"><a onclick="searchArtist('+prev+')">Prev</a></li> <li class="hidden-xs hidden-sm">Showing '+offset+'-'+offsetnext+' of '+response.artists.total+' </li><li id="next"><a onclick="searchArtist('+next+')">Next</a></li></ul></div>');
+        if(offset==0){$("#prev").addClass('disabled');}
+		else{$("#prev").removeClass('disabled');}
+		if(total<=offsetnext)
+			{$("#next").addClass('disabled');}
+		else
+			{$("#next").removeClass('disabled');}
+		}
+    });
+};
+document.getElementById('search-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+	var query = document.getElementById('query').value;
+    searchArtist('https://api.spotify.com/v1/search?q='+query+'&type=artist&limit=10');
+}, false);
+</script>
+</body>
+</html>

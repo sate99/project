@@ -1,0 +1,79 @@
+body
+{padding:20px;}
+.cover {
+    width: 70px;
+    height: 70px;
+	background-image:url('images/no-image.png');
+    background-size: cover;
+}
+#search-form, .form-control {
+    margin-bottom: 20px;
+}
+#search-form input[type=text]
+{
+	width:100%;
+	height:45px;
+	border:solid #e1e1e1 1px;
+	border-radius:3px;
+	padding-left:10px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	background:#f9f9f9;
+	transition-duration:0.5s;
+	box-shadow: inset 0px 0px 1px rgba(0,0,0,0.4);
+}
+#search-form input[type=text]:focus{
+border-color:#46b8da;
+background:#ffffff;
+}
+#artist .cover {
+	width: 150px;
+    height: 150px;
+}
+.main-container{
+margin-bottom: 20px;
+}
+.main-container a{
+text-decoration: underline;
+}
+#results h3{
+text-decoration: underline;
+margin-bottom:	20px;
+}
+.backsearch
+{
+margin-bottom:	20px;
+}
+.paginationmain {
+padding: 20px;
+text-align:	center;
+}
+.disabled
+{pointer-events: none;
+}
+.modal-header{
+background: #000000;
+color: #ffffff;
+}
+.close{
+	color: #ffffff;
+	opacity: 0.9;
+}
+#track
+{
+padding:20px 0;
+}
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 300px;
+    overflow-y: auto;
+}
+.albumdetails{
+	margin-bottom: 20px;
+}
+.albumdetails .aname{
+font-size: 18px;
+font-weight: 500;
+}

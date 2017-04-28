@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+
+<!--[if lte IE 8]> <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-old-ie-min.css"> <![endif]-->
+<!--[if gt IE 8]><!--> <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css"> <!--<![endif]-->
+<!--[if lte IE 8]> <link rel="stylesheet" href="http://purecss.io/combo/1.17.16?/css/layouts/blog-old-ie.css"> <![endif]-->
+ <!--[if gt IE 8]><!--> <link rel="stylesheet" href="http://purecss.io/combo/1.17.16?/css/layouts/blog.css"> <!--<![endif]-->
+<!--[if lt IE 9]> <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script> <![endif]-->
+<style type="text/css">
+.post-title { font-size:18px; }
+.post-title a { color:grey; }
+</style>
+
+</head>
+<body>
+
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title">Hacker News</h1>
+            <h2 class="brand-tagline">Top Stories</h2>
+
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead">Top Stories</h1>
+
+              
+           	</div>
+			
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+ //timestamp to readable date
+function storydate(sdate)	{
+		var d = new Date(sdate*1000);
+		var mthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+		var curr_date = d.getDate();
+		var curr_month = d.getMonth() + 1;
+		var curr_year = d.getFullYear();
+		var e = curr_date + "-" + mthNames[curr_month-1] + "-" + curr_year;
+		return e;
+	}
+if (sessionStorage.getItem("storydata")!=null) {
+	var json = JSON.parse(sessionStorage.getItem('storydata'));
+	var requests = [];
+	//showing only 10 results
+    for (var i = 0; i < 10; i++) {
+      requests.push($.getJSON('https://hacker-news.firebaseio.com/v0/item/' + json[i] + '.json'));
+	}
+    $.when.apply($, requests).done(function() {
+      var results = [].slice.call(arguments);
+      var list = results.map(function(arr) {
+        return '<section class="post"><header class="post-header"><h2 class="post-title"><a target="_blank" href="' + arr[0].url + '">' + arr[0].title + '</a></h2><p class="post-meta">By <a title="'+arr[0].by+'" href="#" class="post-author">'+arr[0].by+'</a> with score of <a class="post-category post-category-design" href="#"> '+arr[0].score+'</a> <a class="post-category post-category-pure" href="#"> '+storydate(arr[0].time)+' </a> </p></header></section>';
+      });
+      $(".posts").append(list.join(''));
+    });
+}
+else {
+$.getJSON('https://hacker-news.firebaseio.com/v0/topstories.json', function(json) {
+    //store data
+	sessionStorage.setItem('storydata', JSON.stringify(json));
+	var requests = [];
+	//showing only 10 results
+    for (var i = 0; i < 10; i++) {
+      requests.push($.getJSON('https://hacker-news.firebaseio.com/v0/item/' + json[i] + '.json'));
+	}
+    $.when.apply($, requests).done(function() {
+      var results = [].slice.call(arguments);
+      var list = results.map(function(arr) {
+        return '<section class="post"><header class="post-header"><h2 class="post-title"><a target="_blank" href="' + arr[0].url + '">' + arr[0].title + '</a></h2><p class="post-meta">By <a title="'+arr[0].by+'" href="#" class="post-author">'+arr[0].by+'</a> with score of <a class="post-category post-category-design" href="#"> '+arr[0].score+'</a> <a class="post-category post-category-pure" href="#"> '+storydate(arr[0].time)+' </a> </p></header></section>';
+      });
+      $(".posts").append(list.join(''));
+    });
+  });
+}
+</script>
+
+</body>
+</html>

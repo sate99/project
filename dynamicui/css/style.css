@@ -1,0 +1,98 @@
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.row.content {
+    padding: 30px;
+}
+.sidenav {
+    background-color: #f1f1f1;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+}
+#myInput {
+    background-image: url('../image/searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+#myUL {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#myUL li label {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    /* Prevent double borders */
+    
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block
+}
+.list-item {
+    text-align: left;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    padding: 3px 20px;
+    white-space: nowrap;
+}
+.eheader {
+    padding: 15px;
+    background: #7EC0EE;
+    text-align: center;
+}
+.main-container {
+    padding: 20px;
+}
+.main-container-top {
+    background: #f1f1f1;
+    padding: 15px;
+    margin-bottom: 20px;
+	min-height: 61px !important;
+}
+.font-bold {
+    font-size: 20px;
+    font-weight: bold;
+}
+.element {
+    padding: 10px;
+}
+.red {
+    color: red;
+}
+@media screen and (min-width: 992px) {
+	.main-container-top .col-md-2	{
+		width: 16%;
+	}
+	.main-container-top .btn-sm	{
+		margin-right: 2px;
+	}
+}
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .row.content {
+        height: auto;
+        padding: 10px;
+    }
+	.main-container-top .btn-sm	{
+		margin-right: 10px;
+		margin-bottom: 5px;
+	}
+}

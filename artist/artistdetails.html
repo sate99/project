@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Artist Details</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Satendra">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="col-md-12 backsearch">
+		<a class="btn btn-info btn-lg" href="index.html">❮❮ Back to search</a>
+	</div>
+    <div id="artist"></div>
+    <div id="results"></div>
+	<div id="pagination"></div>
+	<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Track Listing</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-xs-12 albumdetails"><div class="col-md-6 col-xs-6 aname"></div><div class="col-md-6 col-xs-6">Released: <span class="rdate"></span></div></div>
+		  <table class="table table-bordered">
+				<thead>
+				  <tr>
+					<th>Track</th>
+					<th>Duration</th>
+				  </tr>
+				</thead>
+				 <tbody id="track">
+				 </tbody>
+		  </table>
+		</div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<script>
+var url = window.location.href;
+	    url = url.split("?");
+	    var artistId = url[1];
+//mstoMS
+function msToMS(ms) {
+    var M = Math.floor(ms / 60000);
+    ms -= M * 60000;
+    var S = Math.round(ms / 1000);
+    return M +"m:"+S+"s";
+};
+
+//get Tracks
+var getTrack = function (albumid) {
+	$.ajax({
+		url: 'https://api.spotify.com/v1/albums/'+albumid,
+        success: function (albumdata) {
+		$(".aname").html(albumdata.name);
+		$(".rdate").html(albumdata.release_date);
+		}
+	});
+	$.ajax({
+		url: 'https://api.spotify.com/v1/albums/'+albumid+'/tracks',
+        success: function (trackdata) {
+		$('#track').empty();
+		$.each(trackdata.items, function(i, item) {
+		$("tbody").append('<tr><td>'+trackdata.items[i].name+'</td><td>('+msToMS(trackdata.items[i].duration_ms)+')</td></tr>');
+		});
+		}
+
+	});
+};
+	
+//Get albums
+var getAlbum = function (albumurl) {		
+$.ajax({
+        url: albumurl,
+        success: function (response) {
+		$('#artist, #results, #pagination').empty();
+		
+		$.getJSON(response.items[0].artists[0].href, function (data) {
+			$('#artist').append('<div class="col-md-12 col-xs-12 main-container artist"></div>');
+			$(".artist").append('<div class="col-md-4 col-xs-6 cover"></div><div class="col-md-4 col-xs-6"><div><h3>'+data.name+'</h3></div><div>Followers: '+data.followers.total+'</div></div>');
+			if(data.images[0]){$(".artist").children('.cover').css("background-image", "url("+data.images[0].url+")"); }
+		});
+		$('#results').append('<div class="col-md-12 col-xs-12"><h3>Album</h3></div>');
+		$.each(response.items, function(i, item) {
+		var albumid = "'"+response.items[i].id+"'";
+		$('#results').append('<div class="col-md-12 col-xs-12 main-container artist'+i+'"></div>');
+		$(".artist"+i).append('<div class="col-md-4 col-xs-6 cover"></div><div class="col-md-4 col-xs-6"><div><h4>'+response.items[i].name+'</h4></div><div><a data-toggle="modal" data-target="#myModal" onclick="getTrack('+albumid+')">View Tracks</a></div></div>');
+		if(response.items[i].images[0]){$(".artist"+i).children('.cover').css("background-image", "url("+response.items[i].images[0].url+")"); }
+        });
+		var prev = "'"+response.previous+"'";
+		var next = "'"+response.next+"'";
+		var offset = response.offset;
+		var limit = response.limit;
+		var total = response.total;
+		var offsetnext = offset+limit;
+		if(total<=offsetnext)
+			{offsetnext = total;}
+		else
+			{offsetnext = offsetnext;}
+		$('#pagination').append('<div class="col-md-12 col-xs-12 paginationmain"><ul class="pager"><li class="col-xs-12 hidden-md hidden-lg">Showing '+offset+'-'+offsetnext+' of '+response.total+'</li><li id="prev"><a onclick="searchAlbum('+prev+')">Prev</a></li> <li class="hidden-xs hidden-sm">Showing '+offset+'-'+offsetnext+' of '+response.total+' </li><li id="next"><a onclick="searchAlbum('+next+')">Next</a></li></ul></div>');
+        if(offset==0){$("#prev").addClass('disabled');}
+		else{$("#prev").removeClass('disabled');}
+		if(total<=offsetnext)
+			{$("#next").addClass('disabled');}
+		else
+			{$("#next").removeClass('disabled');}
+        }
+    });
+};
+$(document).ready(function(){
+getAlbum('https://api.spotify.com/v1/artists/'+artistId+'/albums?limit=10');
+});
+</script>
+</body>
+</html>

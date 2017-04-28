@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CustomerXPs®</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">CustomerXPs®</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a>
+                </li>
+                <li><a href="#">About</a>
+                </li>
+                <li><a href="#">Projects</a>
+                </li>
+                <li><a href="#">Contact</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-md-3 sidenav">
+            <div class="row element">
+                <div class="col-md-6 col-xs-6 font-bold text-left">Element</div>
+                <div class="col-md-6 col-xs-6 font-bold text-right">
+                    <button type="button" class="btn btn-sm allclose">
+                        <span class="glyphicon glyphicon-remove"></span> Clear </button>
+                </div>
+            </div>
+
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for element.." title="Type in a name">
+
+            <ul id="myUL">
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="tbox" name="tbox" onclick="addelement('textbox')" /> Text Box<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="radio" name="radio" onclick="addelement('radio')" /> Radio<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="sbox" name="sbox" onclick="addelement('select')" /> Select Box<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="cbox" name="cbox" onclick="addelement('checkbox')" /> Check Box<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="tarea" name="tarea" onclick="addelement('textarea')" /> Text Area<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="list-item">
+                        <input type="checkbox" id="autoc" name="autoc" onclick="addelement('autocomplete')" /> Auto Complete<span class="badge pull-right">0</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9 text-left">
+            <div class="col-xs-12 col-md-12 main-container-top">
+            </div>
+            <div class="col-xs-12 col-md-12 eheader">
+                <div class="col-xs-6 col-md-2">What is added</div>
+                <div class="col-xs-6 col-md-5">HTML Element</div>
+            </div>
+            <div class="col-md-12 col-xs-12 main-container">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <p>Copyright © 2017. CustomerXPs® Software Pvt. Ltd. All rights reserved.</p>
+</footer>
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("label")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+
+        }
+    }
+};
+// add element
+function addelement(element){
+	//textbox
+	if(element=="textbox")
+	{
+		if($('#tbox').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 textbox btn btn-default btn-sm" onclick="remove(\''+element+'\')">Text Box <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="textbox"><div class="col-xs-12 col-md-12 form-group textboxinner removeelement"><label class="col-xs-6 col-md-2">Text Box</label><div class="col-xs-6 col-md-5"><input class="form-control" type="text" name="textbox" id="textbox"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#tbox').next('.badge').html($('.textbox .add').length);
+		$('.main-container-top .textbox').children('.badge').html($('.textbox .add').length);
+		
+		}
+		else
+		{
+			$('.textbox').remove();
+			badge("#tbox",".textbox");
+		}
+	}
+	//radio
+	else if(element=="radio")
+	{
+		if($('#radio').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 radiobutton btn btn-default btn-sm" onclick="remove(\''+element+'\')">Radio <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="radiobutton"><div class="col-xs-12 col-md-12 form-group radiobuttoninner removeelement"><label class="col-md-2 col-xs-6">Radio</label><div class="col-md-2 col-xs-3 text-center"><input type="radio" name="radio" id="radioy"> Yes</div><div class="col-md-2 col-xs-3 text-center"><input type="radio" name="radio" id="radion"> No</div><div class="col-md-1"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#radio').next('.badge').html($('.radiobutton .add').length);
+		$('.main-container-top .radiobutton').children('.badge').html($('.radiobutton .add').length);
+		}
+		else
+		{
+			$('.radiobutton').remove();
+			badge("#radio",".radiobutton");
+		}
+	}
+	//select
+	else if(element=="select")
+	{
+		if($('#sbox').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 select btn btn-default btn-sm" onclick="remove(\''+element+'\')">Select <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="select"><div class="col-md-12 col-xs-12 form-group selectinner removeelement"><label class="col-md-2 col-xs-6">Select Box</label><div class="col-md-5 col-xs-6"><select class="form-control"><option value="Test">Test</option><option value="Test1">Test1</option><option value="Test2">Test2</option></select></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#sbox').next('.badge').html($('.select .add').length);
+		$('.main-container-top .select').children('.badge').html($('.select .add').length);
+		}
+		else
+		{
+			$('.select').remove();
+			badge("#sbox",".select");
+		}
+	}
+	//checkbox
+	else if(element=="checkbox")
+	{
+		if($('#cbox').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 checkboxdiv btn btn-default btn-sm" onclick="remove(\''+element+'\')">Check Box <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="checkboxdiv"><div class="col-md-12 col-xs-12 form-group checkboxdivinner removeelement"><label class="col-md-2 col-xs-6">Check Box</label><div class="col-md-5 col-xs-6"><input type="checkbox" name="default" id="checkbox"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#cbox').next('.badge').html($('.checkboxdiv .add').length);
+		$('.main-container-top .checkboxdiv').children('.badge').html($('.checkboxdiv .add').length);
+		}
+		else
+		{
+			$('.checkboxdiv').remove();
+			badge("#cbox",".checkboxdiv");
+		}
+	}
+	//textarea
+	else if(element=="textarea")
+	{
+		if($('#tarea').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 textarea btn btn-default btn-sm" onclick="remove(\''+element+'\')">Text Area <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="textarea"><div class="col-md-12 col-xs-12 form-group textareainner removeelement"><label class="col-md-2 col-xs-6">Text Area</label><div class="col-md-5 col-xs-6"><textarea class="form-control"></textarea></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#tarea').next('.badge').html($('.textarea .add').length);
+		$('.main-container-top .textarea').children('.badge').html($('.textarea .add').length);
+		}
+		else
+		{
+			$('.textarea').remove();
+			badge("#tarea",".textarea");
+		}
+	}
+	//autocomplete
+	else if(element=="autocomplete")
+	{
+		if($('#autoc').is(':checked')) {
+		$('.main-container-top').append('<button type="button" class="col-md-2 autocomplete btn btn-default btn-sm" onclick="remove(\''+element+'\')">Auto Complete <span class="badge">1</span><span class="glyphicon glyphicon-remove red pull-right"></span></button>');
+		$('.main-container').append('<div class="autocomplete"><div class="col-md-12 col-xs-12 form-group autocompleteinner removeelement"><label class="col-md-2 col-xs-6">Auto Complete</label><div class="col-md-5 col-xs-6"><input class="form-control" type="email" name="email" id="email" autocomplete="on"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div></div>');
+		$('#autoc').next('.badge').html($('.autocomplete .add').length);
+		$('.main-container-top .autocomplete').children('.badge').html($('.autocomplete .add').length);
+		}
+		else
+		{
+			$('.autocomplete').remove();
+			badge("#autoc",".autocomplete");
+			
+		}
+	}
+
+};
+
+//add function
+function add(element){
+	//textbox
+	if(element=="textbox")
+	{
+		$('.main-container .textbox').append('<div class="col-xs-12 col-md-12 form-group textboxinner removeelement"><label class="col-xs-6 col-md-2">Text Box</label><div class="col-xs-6 col-md-5"><input class="form-control" type="text" name="textbox" id="textbox"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+		$('#tbox').next('.badge').html($('.textbox .add').length);
+		$('.main-container-top .textbox').children('.badge').html($('.textbox .add').length);
+	}
+	//radio
+	else if(element=="radio")
+	{
+		$('.main-container .radiobutton').append('<div class="col-xs-12 col-md-12 form-group radiobuttoninner removeelement"><label class="col-md-2 col-xs-6">Radio</label><div class="col-md-2 col-xs-3 text-center"><input type="radio" name="radio" id="radioy"> Yes</div><div class="col-md-2 col-xs-3 text-center"><input type="radio" name="radio" id="radion"> No</div><div class="col-md-1"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+		$('#radio').next('.badge').html($('.radiobutton .add').length);
+		$('.main-container-top .radiobutton').children('.badge').html($('.radiobutton .add').length);
+	}
+	//select
+	else if(element=="select")
+	{
+	$('.main-container .select').append('<div class="col-md-12 col-xs-12 form-group selectinner removeelement"><label class="col-md-2 col-xs-6">Select Box</label><div class="col-md-5 col-xs-6"><select class="form-control"><option value="Test">Test</option><option value="Test1">Test1</option><option value="Test2">Test2</option></select></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+	$('#sbox').next('.badge').html($('.select .add').length);
+	$('.main-container-top .select').children('.badge').html($('.select .add').length);
+	}
+	//checkbox
+	else if(element=="checkbox")
+	{
+	$('.main-container .checkboxdiv').append('<div class="col-md-12 col-xs-12 form-group checkboxdivinner removeelement"><label class="col-md-2 col-xs-6">Check Box</label><div class="col-md-5 col-xs-6"><input type="checkbox" name="default" id="checkbox"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+	$('#cbox').next('.badge').html($('.checkboxdiv .add').length);
+	$('.main-container-top .checkboxdiv').children('.badge').html($('.checkboxdiv .add').length);
+	}
+	//textarea
+	else if(element=="textarea")
+	{
+		$('.main-container .textarea').append('<div class="col-md-12 col-xs-12 form-group textareainner removeelement"><label class="col-md-2 col-xs-6">Text Area</label><div class="col-md-5 col-xs-6"><textarea class="form-control"></textarea></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+		$('#tarea').next('.badge').html($('.textarea .add').length);
+		$('.main-container-top .textarea').children('.badge').html($('.textarea .add').length);
+	}
+	//autocomplete
+	else if(element=="autocomplete")
+	{
+		$('.main-container .autocomplete').append('<div class="col-md-12 col-xs-12 form-group autocompleteinner removeelement"><label class="col-md-2 col-xs-6">Auto Complete</label><div class="col-md-5 col-xs-6"><input class="form-control" type="email" name="email" id="email" autocomplete="on"></div><div class="col-md-3 col-xs-12"><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-success btn-sm add" onclick="add(\''+element+'\')"><span class="glyphicon glyphicon-plus"></span></button></div><div class="col-md-3 col-xs-3"><button type="button" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></div></div></div>');
+		$('#autoc').next('.badge').html($('.autocomplete .add').length);
+		$('.main-container-top .autocomplete').children('.badge').html($('.autocomplete .add').length);
+	}
+};
+//remove header element
+function remove(element)
+{
+	//textbox
+	if(element=="textbox")
+	{
+		$('.textbox').remove();
+		$('#tbox').prop("checked", false);
+		badge("#tbox",".textbox");
+	}
+	//radio
+	if(element=="radio")
+	{
+		$('.radiobutton').remove();
+		$('#radio').prop("checked", false);
+		badge("#radio",".radiobutton");
+	}
+	//select
+	if(element=="select")
+	{
+		$('.select').remove();
+		$('#sbox').prop("checked", false);
+		badge("#sbox",".select");
+	}
+	//checkbox
+	else if(element=="checkbox")
+	{
+		$('.checkboxdiv').remove();
+		$('#cbox').prop("checked", false);
+		badge("#cbox",".checkboxdiv");
+	}
+	//textarea
+	else if(element=="textarea")
+	{
+		$('.textarea').remove();
+		$('#tarea').prop("checked", false);
+		badge("#tarea",".textarea");
+	}
+	//autocomplete
+	else if(element=="autocomplete")
+	{
+		$('.autocomplete').remove();
+		$('#autoc').prop("checked", false);
+		badge("#autoc",".autocomplete");
+	}
+}
+//update badge of element
+function badge(a,b)
+{
+	$(a).next('.badge').html($(b+' .add').length);
+	$('.main-container-top '+b).children('.badge').html($(b+' .add').length);
+};
+//updated all bagde
+function badgeall()
+{
+	badge("#tbox",".textbox");
+	badge("#radio",".radiobutton");
+	badge("#sbox",".select");
+	badge("#cbox",".checkboxdiv");
+	badge("#tarea",".textarea");
+	badge("#autoc",".autocomplete");
+};
+$(document).ready(function () {
+    $('.nav li a').click(function() {
+
+        $('.nav li').removeClass('active');
+
+        var $parent = $(this).parent();
+        if (!$parent.hasClass('active')) {
+            $parent.addClass('active');
+        }
+    });
+	$(".allclose").click( function(){
+	$('#myUL input:checkbox').prop("checked", false);
+	$('.main-container, .main-container-top').empty();
+	badgeall();
+	});
+	//remove function
+	$(document).on("click", ".remove", function(){
+	$(this).parents('.removeelement').remove();
+	badgeall();
+	//textbox
+	if($('.textbox .add').length==0)
+	{
+		$('#tbox').prop("checked", false);
+		$('.main-container-top .textbox').remove();
+	}
+	//radio
+	if($('.radiobutton .add').length==0)
+	{
+		$('#radio').prop("checked", false);
+		$('.main-container-top .radiobutton').remove();
+	}
+	//select
+	if(($('.select .add').length)==0)
+	{
+		$('#sbox').prop("checked", false);
+		$('.main-container-top .select').remove();
+	}
+	//checkbox
+	if(($('.checkboxdiv .add').length)==0)
+	{
+		$('#cbox').prop("checked", false);
+		$('.main-container-top .checkboxdiv').remove();
+	}
+	//textarea
+	if($('.textarea .add').length==0)
+	{
+		$('#tarea').prop("checked", false);
+		$('.main-container-top .textarea').remove();
+	}
+	//autocomplete
+	if($('.autocomplete .add').length==0)
+	{
+		$('#autoc').prop("checked", false);
+		$('.main-container-top .autocomplete').remove();
+	}
+	});
+	
+});
+</script>
+</body>
+</html>
