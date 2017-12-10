@@ -121,6 +121,9 @@ a:hover{
 	border: 2px solid #555555;
 }
 @media (max-width:767px) {
+	.chatbox {
+		margin-top: 0;
+	}
 	.chatbox, .chatbox-container {
 		width: 100%;
 	}
