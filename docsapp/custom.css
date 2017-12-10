@@ -1,0 +1,117 @@
+body {background-color: rgb(10,10,10);
+background-image: url('got.jpg');
+background-repeat: no-repeat;
+font-family: 'Roboto', sans-serif;
+ 
+}
+.chatbox-container {width: 500px; margin-left: auto; margin-right: auto; }
+.chatbox  {
+  margin-top: 20px;
+  height: 500px;
+  width: 500px;
+  background-color: rgba(0,0,0,0.25);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.chat-msg-container {
+  width: 100%;
+  height: 48px;  
+}
+.chat-msg-container-hodor {
+  width: 100%;
+  height: 120px;  
+}
+.chat-msg-right,.chat-msg-left {
+  max-width: 280px;
+  margin-top: 10px;
+  background-color: rgba(255,255,255,0.75);
+  padding: 10px;
+  border-radius: 10px;  
+  word-break:break-all;
+  float: left;
+}
+.chat-msg-right {
+  float: right;
+  background-color: rgba(49, 133, 252, 1.0);
+  color: white;
+  text-align: center;
+  
+}
+
+* {
+  max-width: 100%;
+}
+
+
+/*
+.chat-msg-left:before{
+  content: " ";
+  left: 13px;
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 15px 10px 0;
+  border-color: transparent rgba(255,255,255,0.75) transparent transparent;  
+}
+.chat-msg-right:before{
+  content: " ";
+  left: 348px;
+  position: absolute;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent transparent transparent rgba(255,255,255,0.75);  
+}
+*/
+.chat-input {
+  border: 0;
+  width: 416px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+a {
+  border: 0;  
+  border-radius: 5px;
+  display: inline-block;
+  padding: 12px;
+  text-decoration: none;
+  color: white;
+  background-color: #3498db;
+  font-weight: 300;  
+}
+
+a:hover{
+  background-color: #2980b9;
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease-in-out;
+}
+
+/* a:focus {
+  background-color: rgba(31, 118, 175,1.0);
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+} */
+
+
+
+.chatbox::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.chatbox::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.chatbox::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
